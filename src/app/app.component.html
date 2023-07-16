@@ -1,0 +1,5 @@
+<div>
+  <app-navbar *ngIf="isLoggedIn && !authService.isGettingUserData" [selectedPage]="selectedPage"></app-navbar>
+  <app-loading *ngIf="authService.isGettingUserData"></app-loading>
+  <router-outlet *ngIf="!authService.isGettingUserData"></router-outlet>
+</div>

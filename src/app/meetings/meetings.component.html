@@ -1,0 +1,243 @@
+<div class="px-32 py-10 bg-[#F6FAFE] min-h-[95vh] flex justify-center">
+    <div *ngIf="authService.user == null">
+        <div class="flex justify-center items-center h-screen w-screen bg-[#F6FAFE]">
+            <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor" />
+                <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill" />
+            </svg>
+        </div>
+    </div>
+    <div *ngIf="authService.user != null"
+        class="col-span-3 xl:w-1/3 bg-white rounded-xl flex justify-center items-center">
+        <div *ngIf="authService.user?.google_token == null"
+            class="text-center flex flex-col items-center font-semibold p-7">
+            <div> Authorize with Google first before create a meeting</div>
+            <div class="rounded-lg px-4 py-2 border mt-4">
+                <button class="flex" (click)="authorize()">
+                    <svg class="h-8 w-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px"
+                        height="48px">
+                        <path fill="#FFC107"
+                            d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                        <path fill="#FF3D00"
+                            d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                        <path fill="#4CAF50"
+                            d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                        <path fill="#1976D2"
+                            d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                    </svg>
+                    <span class="font-semibold text-lg">Authorize</span>
+                </button>
+            </div>
+        </div>
+        <div *ngIf="authService.user?.google_token != null" class="h-full w-full flex justify-start">
+            <div class="w-full h-full">
+                <div class="font-semibold text-lg px-7 py-3">Meetings</div>
+                <hr>
+                <div
+                    class="text-sm font-semibold text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                    <ul class="flex flex-wrap -mb-px">
+                        <li class="mr-2">
+                            <a
+                                class="cursor-pointer inline-block p-4  border-b-2 text-[#00A19C] border-[#00A19C] rounded-t-lg">Today
+                                <span
+                                    class="inline-flex items-center justify-center w-6 h-6 ml-2 text-xs font-semibold text-[#00A19C] bg-[#CFF9F8] rounded-full">
+                                    2
+                                </span></a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="cursor-pointer inline-block p-4  border-b-2 rounded-t-lg active border-transparent"
+                                aria-current="page">Next 7 days</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="px-7 py-3 text-left flex flex-col h-[85%]">
+                    <div> <strong class="text-3xl mr-3">14</strong><span class="font-light text-xl">Jul</span></div>
+                    <div class="mt-3 flex-1">
+                        <div class="relative text-gray-500 border-l border-gray-200 ml-4">
+                            <li class="pb-5 ml-6">
+                                <span
+                                    class="absolute flex items-center justify-center w-8 h-8 bg-[#20C997] rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
+                                    <svg class="w-3.5 h-3.5 text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                                    </svg>
+                                </span>
+                                <div class="flex">
+                                    <p class="font-sm flex-1">8:00 AM - 9:00 AM</p>60 min
+                                </div>
+                                <p class="text-base font-semibold">Strategy Planning</p>
+                                <div class="flex items-center gap-3">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M16.6666 17.5C16.6666 16.337 16.6666 15.7555 16.5231 15.2824C16.1999 14.217 15.3663 13.3834 14.3009 13.0602C13.8278 12.9167 13.2463 12.9167 12.0833 12.9167H7.91665C6.75368 12.9167 6.17219 12.9167 5.69903 13.0602C4.63369 13.3834 3.80001 14.217 3.47685 15.2824C3.33331 15.7555 3.33331 16.337 3.33331 17.5M13.75 6.25C13.75 8.32107 12.071 10 9.99998 10C7.92891 10 6.24998 8.32107 6.24998 6.25C6.24998 4.17893 7.92891 2.5 9.99998 2.5C12.071 2.5 13.75 4.17893 13.75 6.25Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Faizul Ibrahim
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Tower 1, Level 32, Meeting room A
+                                </div>
+                            </li>
+                        </div>
+                        <div class="relative text-gray-500 border-l border-gray-200 ml-4">
+                            <li class="pb-5 ml-6">
+                                <span
+                                    class="absolute flex items-center justify-center w-8 h-8 bg-[#B9CADA] rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
+                                            stroke="white" stroke-width="1.66667" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                                <span
+                                    class="px-2 py-1 text-[#008000] bg-[#EDFAED] rounded-lg text-[10px]">PRE-REGISTERED</span>
+                                <div class="flex mt-2">
+                                    <p class="font-sm flex-1">9:30 AM - 10:00 AM</p>30 min
+                                </div>
+                                <p class="text-base font-semibold">Marketing 101</p>
+                                <div class="flex items-center gap-3">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M16.6666 17.5C16.6666 16.337 16.6666 15.7555 16.5231 15.2824C16.1999 14.217 15.3663 13.3834 14.3009 13.0602C13.8278 12.9167 13.2463 12.9167 12.0833 12.9167H7.91665C6.75368 12.9167 6.17219 12.9167 5.69903 13.0602C4.63369 13.3834 3.80001 14.217 3.47685 15.2824C3.33331 15.7555 3.33331 16.337 3.33331 17.5M13.75 6.25C13.75 8.32107 12.071 10 9.99998 10C7.92891 10 6.24998 8.32107 6.24998 6.25C6.24998 4.17893 7.92891 2.5 9.99998 2.5C12.071 2.5 13.75 4.17893 13.75 6.25Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Thomas, David, Jeff
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Tower 2, Level 58, Meeting room B
+                                </div>
+                            </li>
+                        </div>
+                        <div class="relative text-gray-500 border-l border-gray-200 ml-4">
+                            <li class="pb-5 ml-6">
+                                <span
+                                    class="absolute flex items-center justify-center w-8 h-8 bg-[#B9CADA] rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
+                                            stroke="white" stroke-width="1.66667" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                                <div class="flex mt-2">
+                                    <p class="font-sm flex-1">11:30 AM - 12:00 PM</p>30 min
+                                </div>
+                                <p class="text-base font-semibold">Discussion on Financial Plan</p>
+                                <div class="flex items-center gap-3">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M16.6666 17.5C16.6666 16.337 16.6666 15.7555 16.5231 15.2824C16.1999 14.217 15.3663 13.3834 14.3009 13.0602C13.8278 12.9167 13.2463 12.9167 12.0833 12.9167H7.91665C6.75368 12.9167 6.17219 12.9167 5.69903 13.0602C4.63369 13.3834 3.80001 14.217 3.47685 15.2824C3.33331 15.7555 3.33331 16.337 3.33331 17.5M13.75 6.25C13.75 8.32107 12.071 10 9.99998 10C7.92891 10 6.24998 8.32107 6.24998 6.25C6.24998 4.17893 7.92891 2.5 9.99998 2.5C12.071 2.5 13.75 4.17893 13.75 6.25Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Discussion on Financial Plan
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Cafe Brunei, Tower 1, Level 2
+                                </div>
+                            </li>
+                        </div>
+                        <div class="relative text-gray-500 border-l border-transparent ml-4">
+                            <li class="ml-6">
+                                <span
+                                    class="absolute flex items-center justify-center w-8 h-8 bg-[#B9CADA] rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
+                                            stroke="white" stroke-width="1.66667" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                                <div class="flex mt-2">
+                                    <p class="font-sm flex-1">3:30 PM - 4:00 PM</p>30 min
+                                </div>
+                                <p class="text-base font-semibold">Product Roadmap Planning</p>
+                                <div class="flex items-center gap-3">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M16.6666 17.5C16.6666 16.337 16.6666 15.7555 16.5231 15.2824C16.1999 14.217 15.3663 13.3834 14.3009 13.0602C13.8278 12.9167 13.2463 12.9167 12.0833 12.9167H7.91665C6.75368 12.9167 6.17219 12.9167 5.69903 13.0602C4.63369 13.3834 3.80001 14.217 3.47685 15.2824C3.33331 15.7555 3.33331 16.337 3.33331 17.5M13.75 6.25C13.75 8.32107 12.071 10 9.99998 10C7.92891 10 6.24998 8.32107 6.24998 6.25C6.24998 4.17893 7.92891 2.5 9.99998 2.5C12.071 2.5 13.75 4.17893 13.75 6.25Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Rachel
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Tower 2, Level 7, Meeting room E
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                    <button type="button"
+                        class="mt-4 border-gray-100 bg-[#00A19C] text-white font-bold tracking-wider w-full p-2 rounded-lg flex items-center justify-center gap-3 content-baseline">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M6.00011 0.533203C6.44194 0.533203 6.80011 0.891375 6.80011 1.3332V5.19987H10.6668C11.1086 5.19987 11.4668 5.55804 11.4668 5.99987C11.4668 6.4417 11.1086 6.79987 10.6668 6.79987H6.80011V10.6665C6.80011 11.1084 6.44194 11.4665 6.00011 11.4665C5.55829 11.4665 5.20011 11.1084 5.20011 10.6665V6.79987H1.33345C0.891619 6.79987 0.533447 6.4417 0.533447 5.99987C0.533447 5.55804 0.891619 5.19987 1.33345 5.19987H5.20011V1.3332C5.20011 0.891375 5.55829 0.533203 6.00011 0.533203Z"
+                                fill="white" />
+                        </svg>
+                        Book a meeting
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

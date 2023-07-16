@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/petronas_vms_frontend",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

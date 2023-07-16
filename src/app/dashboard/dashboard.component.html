@@ -1,0 +1,153 @@
+<div class="px-32 py-10 bg-[#F6FAFE] min-h-screen">
+    <div class="flex">
+        <div class="text-2xl font-semibold flex-1">Performance This Week</div>
+        <div class="button border bg-white py-3 px-5 mb-4 rounded-lg font-semibold flex items-center cursor-pointer">
+            <svg class="mr-3" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
+                    stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Jul 10 - Jul 16</span>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-4 mb-4">
+        <div class="col-span-3 bg-white rounded-xl p-7">
+            <div class="text-[#656565] mb-2">Total Visitors</div>
+            <div class="text-4xl font-bold mb-2">529</div>
+            <div class="flex items-center">
+                <svg class="mr-1" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 15.8332V4.1665M10 4.1665L4.16667 9.99984M10 4.1665L15.8333 9.99984" stroke="#12B76A"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="text-[#027A48] mr-1">40%</div>
+                <div class="text-[#475467]">vs last month</div>
+            </div>
+        </div>
+        <div class="col-span-3 bg-white rounded-xl p-7">
+            <div class="text-[#656565] mb-2">Average Check-In Time</div>
+            <div class="text-4xl font-bold mb-2">5 mins</div>
+            <div class="flex items-center">
+                <svg class="mr-1" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 15.8332V4.1665M10 4.1665L4.16667 9.99984M10 4.1665L15.8333 9.99984" stroke="#12B76A"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="text-[#027A48] mr-1">40%</div>
+                <div class="text-[#475467]">vs last month</div>
+            </div>
+        </div>
+        <div class="col-span-3 bg-white rounded-xl p-7">
+            <div class="text-[#656565] mb-2">Avg Meeting Duration</div>
+            <div class="text-4xl font-bold mb-2">56 mins</div>
+            <div class="flex items-center">
+                <svg class="mr-1" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 4.1665V15.8332M10 15.8332L15.8333 9.99984M10 15.8332L4.16667 9.99984" stroke="#F04438"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="text-[#B42318] mr-1">2%</div>
+                <div class="text-[#475467]">vs last month</div>
+            </div>
+        </div>
+        <div class="col-span-3 bg-white rounded-xl p-7">
+            <div class="text-[#656565] mb-2">Donations</div>
+            <div class="text-4xl font-bold mb-2">$501,280</div>
+            <div class="text-[#475467]">1,208 donations in total</div>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-4 mb-4">
+        <div class="col-span-6 bg-white rounded-xl p-7">
+            <div class="text-2xl font-semibold mb-2">Visitor Pre-Registration</div>
+            <hr>
+            <div class="h-[26rem] flex justify-center items-center py-5">
+                <canvas id="DoughnutChart">{{ doughnutChart }}</canvas>
+            </div>
+        </div>
+        <div class="col-span-6 bg-white rounded-xl p-7">
+            <div class="text-2xl font-semibold mb-2">Net Promoter Score (NPS)</div>
+            <hr>
+            <div class="h-[26rem] flex justify-center items-center py-5">
+                <canvas id="GaugeChart">{{ gaugeChart }}</canvas>
+            </div>
+        </div>
+        <div class="col-span-6 bg-white rounded-xl p-7">
+            <div class="text-2xl font-semibold mb-2">Peak hours / days</div>
+            <hr>
+            <div class="h-[26rem] flex justify-center items-center py-5">
+                <canvas id="StackedColumnChart">{{ stackedColumnChart }}</canvas>
+            </div>
+        </div>
+        <div class="col-span-6 bg-white rounded-xl p-7">
+            <div class="text-2xl font-semibold mb-2">Most visited floors this week</div>
+            <hr>
+            <div class="h-[26rem] flex p-8 items-stretch">
+                <img class="mr-8" src="assets/images/petronas-twin-tower-model.png" alt="klcc">
+                <div class="flex-1 flex flex-col items-stretch">
+                    <div class="flex w-full text-center mb-4">
+                        <div
+                            class="w-full button cursor-pointer border-t border-b border-l rounded-l-lg bg-[#00A19C] px-4 py-2 text-white font-semibold">
+                            Tower 1</div>
+                        <div
+                            class="w-full button cursor-pointer border-t border-b border-r rounded-r-lg bg-white px-4 py-2 text-[#00A19C] font-semibold">
+                            Tower 2</div>
+                    </div>
+                    <table class="h-full">
+                        <tbody>
+                            <tr>
+                                <td>#1</td>
+                                <td class="text-center">Level 20</td>
+                                <td class="text-center">25,201 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#2</td>
+                                <td class="text-center">Level 5</td>
+                                <td class="text-center">24,496 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#3</td>
+                                <td class="text-center">Level 2</td>
+                                <td class="text-center">23,521 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#4</td>
+                                <td class="text-center">Level 1</td>
+                                <td class="text-center">22,437 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#5</td>
+                                <td class="text-center">Level 4</td>
+                                <td class="text-center">19,574 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#6</td>
+                                <td class="text-center">Level 47</td>
+                                <td class="text-center">16,251 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#7</td>
+                                <td class="text-center">Level 46</td>
+                                <td class="text-center">14,258 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#8</td>
+                                <td class="text-center">Level 68</td>
+                                <td class="text-center">13,058 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#9</td>
+                                <td class="text-center">Level 70</td>
+                                <td class="text-center">12,395 visitors</td>
+                            </tr>
+                            <tr>
+                                <td>#10</td>
+                                <td class="text-center">Level 58</td>
+                                <td class="text-center">11,386 visitors</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

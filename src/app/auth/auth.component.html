@@ -1,0 +1,69 @@
+<section class="min-h-screen flex flex-col bg-[#F6FAFE]">
+    <div class="flex flex-1 items-center justify-center">
+        <div class="rounded-xl bg-white px-4 lg:px-24 py-16 lg:max-w-xl sm:max-w-md w-full text-center">
+            <div class="text-center">
+                <h1 class="font-bold tracking-wider text-3xl mb-8 w-full text-gray-600">
+                    Login
+                </h1>
+                <div class="py-2 text-left">
+                    <input type="email" id="login_email" [(ngModel)]='login_email'
+                        class="border-2 border-gray-100 focus:outline-none bg-gray-100 block w-full py-2 px-4 rounded-lg focus:border-gray-700 "
+                        placeholder="Email" />
+                </div>
+                <div class="py-2 text-left">
+                    <input type="password" id="login_password" [(ngModel)]='login_password'
+                        class="border-2 border-gray-100 focus:outline-none bg-gray-100 block w-full py-2 px-4 rounded-lg focus:border-gray-700 "
+                        placeholder="Password" />
+                </div>
+                <div class="py-2">
+                    <button type="button" (click)="login()"
+                        class="border-gray-100 bg-[#00A19C] text-white font-bold tracking-wider block w-full p-2 rounded-lg">
+                        Login
+                    </button>
+                </div>
+            </div>
+            <div class="text-right">
+                <a href="#" class="hover:underline">Forgot password?</a>
+            </div>
+            <div class="py-4">or</div>
+            <div class="text-center">
+                <h1 class="font-bold tracking-wider text-3xl mb-8 w-full text-gray-600">
+                    Register
+                </h1>
+                <div class="py-2 text-left">
+                    <input type="email" [(ngModel)]='register_email'
+                        class="border-2 border-gray-100 focus:outline-none bg-gray-100 block w-full py-2 px-4 rounded-lg focus:border-gray-700 "
+                        placeholder="Email" />
+                </div>
+                <div class="py-2 text-left">
+                    <input type="text" [(ngModel)]='register_name'
+                        class="border-2 border-gray-100 focus:outline-none bg-gray-100 block w-full py-2 px-4 rounded-lg focus:border-gray-700 "
+                        placeholder="Full Name" />
+                </div>
+                <div class="py-2 text-left">
+                    <input type="text" [(ngModel)]='register_phone'
+                        class="border-2 border-gray-100 focus:outline-none bg-gray-100 block w-full py-2 px-4 rounded-lg focus:border-gray-700 "
+                        placeholder="Phone" />
+                </div>
+                <div class="py-2 text-left">
+                    <input type="password" [(ngModel)]='register_password'
+                        class="border-2 border-gray-100 focus:outline-none bg-gray-100 block w-full py-2 px-4 rounded-lg focus:border-gray-700 "
+                        placeholder="Password" />
+                </div>
+                <div class="py-2">
+                    <button type="button" (click)="register()"
+                        class="border-gray-100 bg-[#00A19C] text-white font-bold tracking-wider block w-full p-2 rounded-lg">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="absolute right-0 top-0 m-5 rounded-lg bg-green-50 p-5 shadow-md">
+        To view admin dashboard: <br>
+        Email: admin@petronas.com <br>
+        Password: admin <br>
+        <br>
+        Register to create a meeting
+    </div>
+</section>
