@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "@danielmoncada/angular-datetime-picker": "^16.0.1",
     "@swimlane/ngx-charts": "^20.4.1",
     "@syncfusion/ej2-angular-charts": "^22.1.38",
     "angularx-qrcode": "^16.0.0",

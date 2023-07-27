@@ -1,8 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { apiHost } from '../configs/api';
-import { headerWithoutToken } from '../configs/headers';
+import { apiHost, headerWithoutToken } from '../configs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +21,12 @@ export class InvitationsService {
     );
   }
 
-  async preRegister(id: string, nric: string): Promise<HttpResponse<any>> {
+  async preRegister(id: string, nric: string, name: string): Promise<HttpResponse<any>> {
     return firstValueFrom(
       this.http.post(`${apiHost}/api/invitations/${id}/`,
         {
-          'visitor_nric': nric
+          'visitor_nric': nric,
+          'visitor_name': name,
         },
         {
           headers: headerWithoutToken(),

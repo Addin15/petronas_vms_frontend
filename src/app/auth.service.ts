@@ -25,15 +25,15 @@ export class AuthService {
     if (token) {
       this.token = token;
 
-      this.http.get(
+      this.http.get<User>(
         `${apiHost}/auth/user/`,
         {
           headers: headerWithToken(token),
           observe: 'response'
         }
-      ).subscribe((response: HttpResponse<any>) => {
-        if (response.status == 200) {
-          const user = response.body;
+      ).subscribe((response) => {
+        if (response.ok) {
+          const user = response.body!;
 
           this.user = new User({
             id: user.id,
@@ -45,7 +45,13 @@ export class AuthService {
           });
 
           this._isLoggedIn.next(true);
+        } else {
+          this.logout();
+          this._isLoggedIn.next(false);
         }
+      }, err => {
+        this.logout();
+        this._isLoggedIn.next(false);
       });
 
     }
@@ -53,10 +59,28 @@ export class AuthService {
     this.isGettingUserData = false;
   }
 
-  public hasToken(): boolean {
+  public async hasToken(): Promise<boolean> {
     const token = localStorage.getItem('token');    // Check whether the token is expired and return
     // true or false
-    if (token) return true; else return false;
+    if (token) {
+      const response = await firstValueFrom(
+        this.http.get<User>(
+          `${apiHost}/auth/user/`,
+          {
+            headers: headerWithToken(token),
+            observe: 'response'
+          }
+        )
+      );
+
+      if (response.ok) {
+        this.user = response.body;
+
+        return true;
+
+      }
+      return false;
+    } else return false;
   }
 
   // Call Register API
@@ -104,8 +128,8 @@ export class AuthService {
   }
 
   async authorizeGoogle(): Promise<void> {
-    await firstValueFrom(
-      this.http.post(
+    const response = await firstValueFrom(
+      this.http.post<any>(
         `${apiHost}/auth/google-authorize/`,
         {},
         {
@@ -115,7 +139,36 @@ export class AuthService {
       )
     );
 
-    this.getUser();
+    if (response.ok) {
+      const win = window.open(response.body.auth_url, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+      const timer = setInterval(() => {
+        if (win!.closed) {
+          clearInterval(timer);
+          this.getUser();
+        }
+      }, 500);
+    }
+  }
+
+  async redirect(code: string): Promise<boolean> {
+    const response = await firstValueFrom(
+      this.http.post(
+        `${apiHost}/auth/redirect/`,
+        {
+          code
+        },
+        {
+          headers: headerWithToken(this.token!),
+          observe: 'response'
+        }
+      )
+    );
+
+    if (response.ok) {
+      return true;
+    }
+
+    return false;
   }
 
   // Call Login API

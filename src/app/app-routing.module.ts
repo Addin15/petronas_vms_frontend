@@ -8,6 +8,7 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { MeetingsComponent } from './meetings/meetings.component';
+import { RedirectComponent } from './redirect/redirect.component';
 
 const routes: Routes = [
   { path: 'invitations/:id', component: InvitationsComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'visitors', component: VisitorsComponent, canActivate: [AuthGuard] },
   { path: 'integrations', component: IntegrationsComponent, canActivate: [AuthGuard] },
-  { path: 'meetings', component: MeetingsComponent, canActivate: [AuthGuard] }
+  { path: 'meetings', component: MeetingsComponent, canActivate: [AuthGuard] },
+  { path: 'redirect', component: RedirectComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

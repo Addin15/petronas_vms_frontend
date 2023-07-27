@@ -1,4 +1,6 @@
-export const apiHost = 'https://petronas-vms.onrender.com';
+const DEBUG: boolean = false;
+
+export const apiHost = DEBUG ? 'http://127.0.0.1:8000' : 'https://petronas-vms.onrender.com';
 
 export function headerWithToken(token: string): {} {
     return {

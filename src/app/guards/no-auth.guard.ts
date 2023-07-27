@@ -2,11 +2,11 @@ import { inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../auth.service";
 
-export const NoAuthGuard = () => {
+export const NoAuthGuard = async () => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    if (!authService.hasToken()) {
+    if (!await authService.hasToken()) {
         return true;
     }
 

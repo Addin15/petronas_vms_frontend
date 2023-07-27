@@ -13,7 +13,7 @@
         </div>
     </div>
     <div *ngIf="authService.user != null"
-        class="col-span-3 xl:w-1/3 bg-white rounded-xl flex justify-center items-center">
+        class="col-span-3 xl:w-1/3 bg-white rounded-xl flex justify-center items-center shadow-md">
         <div *ngIf="authService.user?.google_token == null"
             class="text-center flex flex-col items-center font-semibold p-7">
             <div> Authorize with Google first before create a meeting</div>
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div *ngIf="authService.user?.google_token != null" class="h-full w-full flex justify-start">
-            <div class="w-full h-full">
+            <div *ngIf="step == 0" class="w-full h-full">
                 <div class="font-semibold text-lg px-7 py-3">Meetings</div>
                 <hr>
                 <div
@@ -46,7 +46,7 @@
                                 class="cursor-pointer inline-block p-4  border-b-2 text-[#00A19C] border-[#00A19C] rounded-t-lg">Today
                                 <span
                                     class="inline-flex items-center justify-center w-6 h-6 ml-2 text-xs font-semibold text-[#00A19C] bg-[#CFF9F8] rounded-full">
-                                    2
+                                    4
                                 </span></a>
                         </li>
                         <li class="mr-2">
@@ -56,66 +56,37 @@
                     </ul>
                 </div>
                 <div class="px-7 py-3 text-left flex flex-col h-[85%]">
-                    <div> <strong class="text-3xl mr-3">14</strong><span class="font-light text-xl">Jul</span></div>
+                    <div> <strong class="text-3xl mr-2">{{ today() }}</strong><span class="font-light text-xl">{{
+                            month() }}</span></div>
                     <div class="mt-3 flex-1">
-                        <div class="relative text-gray-500 border-l border-gray-200 ml-4">
+                        <div *ngFor="let meeting of meetings"
+                            class="relative text-gray-500 border-l border-gray-200 ml-4">
                             <li class="pb-5 ml-6">
                                 <span
-                                    class="absolute flex items-center justify-center w-8 h-8 bg-[#20C997] rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
-                                    <svg class="w-3.5 h-3.5 text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                    class="absolute flex items-center justify-center w-8 h-8 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900"
+                                    [ngClass]="is_meeting_ended(meeting) ? 'bg-[#20C997]' : 'bg-[#B9CADA]'">
+                                    <svg *ngIf="is_meeting_ended(meeting)" class="w-3.5 h-3.5 text-white"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 16 12">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
                                     </svg>
-                                </span>
-                                <div class="flex">
-                                    <p class="font-sm flex-1">8:00 AM - 9:00 AM</p>60 min
-                                </div>
-                                <p class="text-base font-semibold">Strategy Planning</p>
-                                <div class="flex items-center gap-3">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16.6666 17.5C16.6666 16.337 16.6666 15.7555 16.5231 15.2824C16.1999 14.217 15.3663 13.3834 14.3009 13.0602C13.8278 12.9167 13.2463 12.9167 12.0833 12.9167H7.91665C6.75368 12.9167 6.17219 12.9167 5.69903 13.0602C4.63369 13.3834 3.80001 14.217 3.47685 15.2824C3.33331 15.7555 3.33331 16.337 3.33331 17.5M13.75 6.25C13.75 8.32107 12.071 10 9.99998 10C7.92891 10 6.24998 8.32107 6.24998 6.25C6.24998 4.17893 7.92891 2.5 9.99998 2.5C12.071 2.5 13.75 4.17893 13.75 6.25Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                    Faizul Ibrahim
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path
-                                            d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                    Tower 1, Level 32, Meeting room A
-                                </div>
-                            </li>
-                        </div>
-                        <div class="relative text-gray-500 border-l border-gray-200 ml-4">
-                            <li class="pb-5 ml-6">
-                                <span
-                                    class="absolute flex items-center justify-center w-8 h-8 bg-[#B9CADA] rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg *ngIf="!is_meeting_ended(meeting)" width="20" height="20" viewBox="0 0 20 20"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
-                                            stroke="white" stroke-width="1.66667" stroke-linecap="round"
+                                            stroke="#344054" stroke-width="1.66667" stroke-linecap="round"
                                             stroke-linejoin="round" />
                                     </svg>
                                 </span>
-                                <span
+                                <span *ngIf="is_pre_registered(meeting.invitations)"
                                     class="px-2 py-1 text-[#008000] bg-[#EDFAED] rounded-lg text-[10px]">PRE-REGISTERED</span>
-                                <div class="flex mt-2">
-                                    <p class="font-sm flex-1">9:30 AM - 10:00 AM</p>30 min
+                                <div class="flex">
+                                    <p class="font-sm flex-1">{{ meeting.start_date | date: 'shortTime' }} - {{
+                                        meeting.end_date | date: 'shortTime' }}</p>
+                                    {{ get_time_diff(meeting.start_date, meeting.end_date) }} min
                                 </div>
-                                <p class="text-base font-semibold">Marketing 101</p>
+                                <p class="text-base font-semibold">{{ meeting.summary }}</p>
                                 <div class="flex items-center gap-3">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -124,7 +95,7 @@
                                             stroke="#758695" stroke-width="1.5" stroke-linecap="round"
                                             stroke-linejoin="round" />
                                     </svg>
-                                    Thomas, David, Jeff
+                                    {{ get_visitors_name(meeting.invitations) }}
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -138,103 +109,267 @@
                                             stroke="#758695" stroke-width="1.5" stroke-linecap="round"
                                             stroke-linejoin="round" />
                                     </svg>
-                                    Tower 2, Level 58, Meeting room B
-                                </div>
-                            </li>
-                        </div>
-                        <div class="relative text-gray-500 border-l border-gray-200 ml-4">
-                            <li class="pb-5 ml-6">
-                                <span
-                                    class="absolute flex items-center justify-center w-8 h-8 bg-[#B9CADA] rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
-                                            stroke="white" stroke-width="1.66667" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                </span>
-                                <div class="flex mt-2">
-                                    <p class="font-sm flex-1">11:30 AM - 12:00 PM</p>30 min
-                                </div>
-                                <p class="text-base font-semibold">Discussion on Financial Plan</p>
-                                <div class="flex items-center gap-3">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16.6666 17.5C16.6666 16.337 16.6666 15.7555 16.5231 15.2824C16.1999 14.217 15.3663 13.3834 14.3009 13.0602C13.8278 12.9167 13.2463 12.9167 12.0833 12.9167H7.91665C6.75368 12.9167 6.17219 12.9167 5.69903 13.0602C4.63369 13.3834 3.80001 14.217 3.47685 15.2824C3.33331 15.7555 3.33331 16.337 3.33331 17.5M13.75 6.25C13.75 8.32107 12.071 10 9.99998 10C7.92891 10 6.24998 8.32107 6.24998 6.25C6.24998 4.17893 7.92891 2.5 9.99998 2.5C12.071 2.5 13.75 4.17893 13.75 6.25Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                    Discussion on Financial Plan
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path
-                                            d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                    Cafe Brunei, Tower 1, Level 2
-                                </div>
-                            </li>
-                        </div>
-                        <div class="relative text-gray-500 border-l border-transparent ml-4">
-                            <li class="ml-6">
-                                <span
-                                    class="absolute flex items-center justify-center w-8 h-8 bg-[#B9CADA] rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
-                                            stroke="white" stroke-width="1.66667" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                </span>
-                                <div class="flex mt-2">
-                                    <p class="font-sm flex-1">3:30 PM - 4:00 PM</p>30 min
-                                </div>
-                                <p class="text-base font-semibold">Product Roadmap Planning</p>
-                                <div class="flex items-center gap-3">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M16.6666 17.5C16.6666 16.337 16.6666 15.7555 16.5231 15.2824C16.1999 14.217 15.3663 13.3834 14.3009 13.0602C13.8278 12.9167 13.2463 12.9167 12.0833 12.9167H7.91665C6.75368 12.9167 6.17219 12.9167 5.69903 13.0602C4.63369 13.3834 3.80001 14.217 3.47685 15.2824C3.33331 15.7555 3.33331 16.337 3.33331 17.5M13.75 6.25C13.75 8.32107 12.071 10 9.99998 10C7.92891 10 6.24998 8.32107 6.24998 6.25C6.24998 4.17893 7.92891 2.5 9.99998 2.5C12.071 2.5 13.75 4.17893 13.75 6.25Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                    Rachel
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path
-                                            d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
-                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                    Tower 2, Level 7, Meeting room E
+                                    {{ meeting.venue }}
                                 </div>
                             </li>
                         </div>
                     </div>
-                    <button type="button"
-                        class="mt-4 border-gray-100 bg-[#00A19C] text-white font-bold tracking-wider w-full p-2 rounded-lg flex items-center justify-center gap-3 content-baseline">
+                    <button type="button" (click)="step = 1"
+                        class="mt-4 border-gray-100 bg-[#00A19C] text-white font-bold tracking-wider w-full p-4 rounded-lg flex items-center justify-center gap-3 content-baseline">
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                 d="M6.00011 0.533203C6.44194 0.533203 6.80011 0.891375 6.80011 1.3332V5.19987H10.6668C11.1086 5.19987 11.4668 5.55804 11.4668 5.99987C11.4668 6.4417 11.1086 6.79987 10.6668 6.79987H6.80011V10.6665C6.80011 11.1084 6.44194 11.4665 6.00011 11.4665C5.55829 11.4665 5.20011 11.1084 5.20011 10.6665V6.79987H1.33345C0.891619 6.79987 0.533447 6.4417 0.533447 5.99987C0.533447 5.55804 0.891619 5.19987 1.33345 5.19987H5.20011V1.3332C5.20011 0.891375 5.55829 0.533203 6.00011 0.533203Z"
                                 fill="white" />
                         </svg>
                         Book a meeting
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="step == 1" class="w-full flex flex-col">
+                <div class="px-6 py-3 flex items-center gap-4 w-full">
+                    <button (click)="step = 0; emptyForm()">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M15.8333 9.99984H4.16666M4.16666 9.99984L9.99999 15.8332M4.16666 9.99984L9.99999 4.1665"
+                                stroke="#475467" stroke-width="1.66667" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <div class="flex-1 mb-1 font-semibold text-lg">Book a meeting</div>
+                </div>
+                <hr>
+                <div class="bg-[#F6FAFE] px-7 py-3 flex-1 flex flex-col">
+                    <div class="flex-1">
+                        <div class="text-[sm] font-semibold text-[#00A19C] mb-2">STEP 1 / 2</div>
+                        <div class="font-semibold text-xl mb-4">Set up your meeting</div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm text-[#344054]" for="summary">Summary</label>
+                            <input type="text" id="summary" [(ngModel)]="summary"
+                                class="bg-white border border-[#00A19C] text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                                required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm text-[#344054]" for="purpose">Purpose</label>
+                            <select id="purpose"
+                                class="bg-white border border-[#00A19C] text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                                required>
+                                <option value="meeting">Business Meeting</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm text-[#344054]" for="date">When is it?</label>
+                            <div class="relative border border-[#17A2B8] rounded-lg">
+                                <input [(ngModel)]="start_date" [owlDateTime]="dt" class="px-3 py-2 rounded-lg w-full"
+                                    placeholder="Select Date and Time">
+                                <div class="absolute inset-y-0 right-3 top-0 bottom-0 flex items-center"
+                                    [owlDateTimeTrigger]="dt">
+                                    <i class=""> <svg width="24" height="24" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
+                                                stroke="#00A19C" stroke-width="1.66667" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </i>
+                                </div>
+                                <owl-date-time #dt></owl-date-time>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm text-[#344054]" for="date">until</label>
+                            <div class="relative border border-[#17A2B8] rounded-lg">
+                                <input [(ngModel)]="end_date" [owlDateTime]="dt2" class="px-3 py-2 rounded-lg w-full"
+                                    placeholder="Select End Date and Time">
+                                <div class="absolute inset-y-0 right-3 top-0 bottom-0 flex items-center"
+                                    [owlDateTimeTrigger]="dt2">
+                                    <i class=""> <svg width="24" height="24" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M17.5 8.33317H2.5M13.3333 1.6665V4.99984M6.66667 1.6665V4.99984M6.5 18.3332H13.5C14.9001 18.3332 15.6002 18.3332 16.135 18.0607C16.6054 17.821 16.9878 17.4386 17.2275 16.9681C17.5 16.4334 17.5 15.7333 17.5 14.3332V7.33317C17.5 5.93304 17.5 5.23297 17.2275 4.69819C16.9878 4.22779 16.6054 3.84534 16.135 3.60565C15.6002 3.33317 14.9001 3.33317 13.5 3.33317H6.5C5.09987 3.33317 4.3998 3.33317 3.86502 3.60565C3.39462 3.84534 3.01217 4.22779 2.77248 4.69819C2.5 5.23297 2.5 5.93304 2.5 7.33317V14.3332C2.5 15.7333 2.5 16.4334 2.77248 16.9681C3.01217 17.4386 3.39462 17.821 3.86502 18.0607C4.3998 18.3332 5.09987 18.3332 6.5 18.3332Z"
+                                                stroke="#00A19C" stroke-width="1.66667" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </i>
+                                </div>
+                                <owl-date-time #dt2></owl-date-time>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm text-[#344054]" for="date">Location</label>
+                            <div class="relative border border-[#17A2B8] rounded-lg">
+                                <input [(ngModel)]="location" class="px-3 py-2 rounded-lg w-full"
+                                    placeholder="Select Location">
+                                <div class="absolute inset-y-0 right-3 top-0 bottom-0 flex items-center">
+                                    <i class=""> <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
+                                                stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
+                                                stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm text-[#344054]" for="description">Description</label>
+                            <textarea [(ngModel)]="description" type="text" id="description"
+                                class="bg-white border border-[#00A19C] text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                                required></textarea>
+                        </div>
+                    </div>
+                    <button type="button" (click)="step = 2"
+                        class="mt-4 border-gray-100 bg-[#00A19C] text-white font-bold tracking-wider w-full p-4 rounded-lg flex items-center justify-center gap-3 content-baseline">
+                        Next: Add guest(s)
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.16667 9.99984H15.8333M15.8333 9.99984L10 4.1665M15.8333 9.99984L10 15.8332"
+                                stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="step == 2" class="w-full flex flex-col">
+                <div class="px-6 py-3 flex items-center gap-4 w-full">
+                    <button (click)="step = 1">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M15.8333 9.99984H4.16666M4.16666 9.99984L9.99999 15.8332M4.16666 9.99984L9.99999 4.1665"
+                                stroke="#475467" stroke-width="1.66667" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <div class="flex-1 mb-1 font-semibold text-lg">Book a meeting</div>
+                </div>
+                <hr>
+                <div class="bg-[#F6FAFE] px-7 py-3 flex-1 flex flex-col">
+                    <div class="flex-1">
+                        <div class="text-[sm] font-semibold text-[#00A19C] mb-2">STEP 2 / 2</div>
+                        <div class="font-semibold text-xl mb-4">Who'd you like to invite?</div>
+
+                        <input [(ngModel)]="email" (keyup.enter)="addEmail()" type="text" id="invite"
+                            class="mb-4 bg-white border border-[#00A19C] text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                            placeholder="Enter Email" required>
+                        <hr>
+                        <div class="mt-4" *ngIf="visitors_email.length > 0">
+                            {{ visitors_email.length }} guest(s)
+                            <div class="mt-3" *ngFor="let email of visitors_email">
+                                <div class="flex gap-3">
+                                    <div class="rounded-full bg-[#763F98] w-8 h-8 flex justify-center items-center">
+                                        <svg width="15" height="15" viewBox="0 0 18 18" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M9 1.125C6.98071 1.125 5.34375 2.76196 5.34375 4.78125C5.34375 6.80054 6.98071 8.4375 9 8.4375C11.0193 8.4375 12.6563 6.80054 12.6563 4.78125C12.6563 2.76196 11.0193 1.125 9 1.125ZM4.21875 4.78125C4.21875 2.14064 6.35939 0 9 0C11.6406 0 13.7813 2.14064 13.7813 4.78125C13.7813 7.42186 11.6406 9.5625 9 9.5625C6.35939 9.5625 4.21875 7.42186 4.21875 4.78125ZM9 13.3125C5.89508 13.3125 3.06592 14.6648 0.971776 16.8859C0.758662 17.1119 0.402661 17.1224 0.176625 16.9093C-0.0494111 16.6962 -0.0598866 16.3402 0.153227 16.1141C2.43869 13.6901 5.55557 12.1875 9 12.1875C12.4444 12.1875 15.5613 13.6901 17.8468 16.1141C18.0599 16.3402 18.0494 16.6962 17.8234 16.9093C17.5973 17.1224 17.2413 17.1119 17.0282 16.8859C14.9341 14.6648 12.1049 13.3125 9 13.3125Z"
+                                                fill="white" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-[#4E5766]">
+                                        {{ email }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" (click)="addMeeting()"
+                        class="mt-4 border-gray-100 bg-[#00A19C] text-white font-bold tracking-wider w-full p-4 rounded-lg flex items-center justify-center gap-3 content-baseline">
+                        Send meeting invite
+                        <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M14.7676 2.35013L8.04356 12.627C8.02504 12.6553 8.00751 12.6821 7.99089 12.7074C7.98591 12.6775 7.98069 12.646 7.97518 12.6126L7.10635 7.34857L14.7676 2.35013ZM6.49163 6.40637L14.1529 1.40793L2.03801 3.42215C2.00463 3.42769 1.97306 3.43295 1.94318 3.43796C1.96853 3.45455 1.99533 3.47205 2.02366 3.49054L6.49163 6.40637ZM15.81 0.00525795C15.9473 -0.00511288 16.1818 -0.0130134 16.399 0.114159C16.6533 0.263044 16.8227 0.522806 16.8566 0.815505C16.8855 1.06552 16.7838 1.277 16.719 1.39851C16.6497 1.52843 16.549 1.68226 16.4414 1.8467L8.97218 13.2625C8.85207 13.4461 8.74227 13.614 8.6443 13.7385C8.55679 13.8497 8.39327 14.0443 8.13595 14.1161C7.84146 14.1981 7.52544 14.1315 7.2892 13.9374C7.08277 13.7679 7.01179 13.5238 6.97667 13.3867C6.93736 13.2332 6.90471 13.0353 6.869 12.8188L5.97959 7.4301C5.97863 7.42434 5.97774 7.41893 5.9769 7.41383C5.97257 7.411 5.96798 7.408 5.96308 7.40481L1.38928 4.41991C1.20554 4.30002 1.03755 4.19041 0.912883 4.09259C0.801533 4.00521 0.606755 3.84192 0.53473 3.58468C0.452303 3.29029 0.518595 2.9742 0.712356 2.73772C0.881665 2.5311 1.12564 2.45982 1.26271 2.42455C1.41616 2.38506 1.61403 2.35217 1.83044 2.31621L15.288 0.0787552C15.4818 0.0465112 15.6631 0.0163454 15.81 0.00525795Z"
+                                fill="white" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="step == 3" class="w-full flex flex-col">
+                <div class="px-6 py-3 flex items-center gap-4 w-full">
+                    <div class="flex-1 mb-1 font-semibold text-lg">Meetings</div>
+                </div>
+                <hr>
+                <div class="bg-white px-7 py-3 flex-1 flex flex-col">
+                    <div class="flex-1 text-center">
+                        <div class="h-72">
+                            <ng-lottie [options]="checkmarkLottie" (animationCreated)="onAnimate($event)">
+                            </ng-lottie>
+                        </div>
+                        <div class="font-semibold text-2xl mb-4">Meeting invite sent!</div>
+                        <div class="text-[#5E6D85] mb-4">
+                            Rachel will receive an email with a pre-registration form.
+                        </div>
+                        <div class="bg-[#F6FAFE] rounded-lg px-4 py-3 font-semibold">
+                            <div class="uppercase text-[0.7rem] text-[#008000] font-semibold">In 4 hours</div>
+                            <div class="font-semibold text-xl mb-4">{{ addedMeeting?.summary }}</div>
+                            <div class="border-b flex gap-4 items-center text-left px-3 py-4 text-sm">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_64_24482)">
+                                        <path
+                                            d="M10 4.99996V9.99996L13.3334 11.6666M18.3334 9.99996C18.3334 14.6023 14.6024 18.3333 10 18.3333C5.39765 18.3333 1.66669 14.6023 1.66669 9.99996C1.66669 5.39759 5.39765 1.66663 10 1.66663C14.6024 1.66663 18.3334 5.39759 18.3334 9.99996Z"
+                                            stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_64_24482">
+                                            <rect width="20" height="20" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                <div>
+                                    <div>{{ addedMeeting?.start_date | date: 'fullDate' }}</div>
+                                    <div class="text-[#666666]">{{ addedMeeting?.start_date | date: 'shortTime' }} - {{
+                                        addedMeeting?.end_date | date: 'shortTime' }}</div>
+                                </div>
+                            </div>
+                            <div class="border-b flex gap-4 items-center text-left px-3 py-4 text-sm">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M16.6666 17.5C16.6666 16.337 16.6666 15.7555 16.5231 15.2824C16.1999 14.217 15.3663 13.3834 14.3009 13.0602C13.8278 12.9167 13.2463 12.9167 12.0833 12.9167H7.91665C6.75368 12.9167 6.17219 12.9167 5.69903 13.0602C4.63369 13.3834 3.80001 14.217 3.47685 15.2824C3.33331 15.7555 3.33331 16.337 3.33331 17.5M13.75 6.25C13.75 8.32107 12.071 10 9.99998 10C7.92891 10 6.24998 8.32107 6.24998 6.25C6.24998 4.17893 7.92891 2.5 9.99998 2.5C12.071 2.5 13.75 4.17893 13.75 6.25Z"
+                                        stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <div>
+                                    <div>{{ get_visitors_name(addedMeeting!.invitations) }}</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-center text-left px-3 py-4 text-sm">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.99998 10.8333C11.3807 10.8333 12.5 9.714 12.5 8.33329C12.5 6.95258 11.3807 5.83329 9.99998 5.83329C8.61927 5.83329 7.49998 6.95258 7.49998 8.33329C7.49998 9.714 8.61927 10.8333 9.99998 10.8333Z"
+                                        stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M9.99998 18.3333C13.3333 15 16.6666 12.0152 16.6666 8.33329C16.6666 4.65139 13.6819 1.66663 9.99998 1.66663C6.31808 1.66663 3.33331 4.65139 3.33331 8.33329C3.33331 12.0152 6.66665 15 9.99998 18.3333Z"
+                                        stroke="#758695" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <div>
+                                    <div>{{ addedMeeting?.venue!.split(',')[0] }}</div>
+                                    <div class="text-[#666666]">{{ addedMeeting?.venue!.split(',').slice(1) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" (click)="step = 0; emptyForm();"
+                        class="mt-4 border-gray-100 bg-[#00A19C] text-white font-bold tracking-wider w-full p-4 rounded-lg flex items-center justify-center gap-3 content-baseline">
+                        Go to today's meeting
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.16667 9.99984H15.8333M15.8333 9.99984L10 4.1665M15.8333 9.99984L10 15.8332"
+                                stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button type="button" (click)="step = 1; emptyForm();"
+                        class="mt-2 border border-[#00A19C] bg-[white] text-[#00A19C] font-bold tracking-wider w-full p-4 rounded-lg flex items-center justify-center gap-3 content-baseline">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M6.00011 0.533203C6.44194 0.533203 6.80011 0.891375 6.80011 1.3332V5.19987H10.6668C11.1086 5.19987 11.4668 5.55804 11.4668 5.99987C11.4668 6.4417 11.1086 6.79987 10.6668 6.79987H6.80011V10.6665C6.80011 11.1084 6.44194 11.4665 6.00011 11.4665C5.55829 11.4665 5.20011 11.1084 5.20011 10.6665V6.79987H1.33345C0.891619 6.79987 0.533447 6.4417 0.533447 5.99987C0.533447 5.55804 0.891619 5.19987 1.33345 5.19987H5.20011V1.3332C5.20011 0.891375 5.55829 0.533203 6.00011 0.533203Z"
+                                fill="#00A19C" />
+                        </svg>
+                        Book Another
                     </button>
                 </div>
             </div>

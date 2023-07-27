@@ -1,17 +1,21 @@
-export class InvitationMeeting {
+import { Invitation } from "./invitation.interface";
 
-    id!: number;
+export interface InvitationMeeting {
 
-    summary!: string;
+    id: number;
 
-    description!: string;
+    summary: string;
 
-    start_date!: Date;
+    description: string;
 
-    end_date!: Date;
+    start_date: Date;
 
-    purpose!: string;
+    end_date: Date;
 
-    venue!: string;
+    purpose: string;
+
+    venue: string;
+
+    invitations: Invitation[];
 
 }

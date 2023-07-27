@@ -1,26 +1,26 @@
 import { Host } from "./host.interface";
 import { InvitationMeeting } from "./invitation-meeting.interface";
 
-export class Invitation {
+export interface Invitation {
 
-    id!: string;
+    id: string;
 
-    host!: Host;
+    host: Host;
 
-    meeting!: InvitationMeeting;
+    meeting: InvitationMeeting;
 
-    visitor_name!: string;
+    visitor_name: string;
 
-    visitor_nric!: string;
+    visitor_nric: string;
 
-    visitor_email!: string;
+    visitor_email: string;
 
-    visitor_phone!: string;
+    visitor_phone: string;
 
-    is_preregistered!: boolean;
+    is_preregistered: boolean;
 
-    in_time!: Date;
+    in_time: Date;
 
-    out_time!: Date;
+    out_time: Date;
 
 }

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 // Add these two
 import { LottieModule } from 'ngx-lottie';
@@ -40,6 +40,6 @@ export function playerFactory(): any {
   ],
   exports: [],
   bootstrap: [AppComponent],
-  providers: [AuthService],
+  providers: [AuthService, DatePipe],
 })
 export class AppModule { }

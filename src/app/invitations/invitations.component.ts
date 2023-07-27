@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { Invitation } from '../interfaces/invitation.interface';
 import { DatePipe } from '@angular/common';
 import { InvitationsService } from './invitations.service';
-import { apiHost } from '../configs/api';
+import { apiHost } from '../configs';
 
 @Component({
   selector: 'app-invitations',
@@ -24,11 +24,13 @@ export class InvitationsComponent implements OnInit {
   };
 
   nric!: string;
+  name!: string;
   isLoading: boolean;
-  isPreRegistering: boolean = false;
+  isPreRegistering: boolean;
   invitation: Invitation | undefined;
 
   constructor(private activeRoute: ActivatedRoute, private invitationService: InvitationsService) {
+    this.isPreRegistering = false;
     this.isLoading = true;
     this.init();
   }
@@ -63,12 +65,12 @@ export class InvitationsComponent implements OnInit {
   async preRegister() {
     this.isPreRegistering = true;
 
-    if (this.nric != null && this.nric != '') {
+    if (this.nric != null && this.nric != '' && this.name != null && this.name != '') {
       const params = await firstValueFrom(this.activeRoute.params);
 
       const id = params['id']
 
-      const response = await this.invitationService.preRegister(id, this.nric);
+      const response = await this.invitationService.preRegister(id, this.nric, this.name);
 
       if (response.status == 200) {
         const data: any = response.body;
